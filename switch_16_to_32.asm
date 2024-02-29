@@ -1,16 +1,17 @@
 [bits 16]  		    ;  real mode
 
-%include "myGDT.asm" 
-
 switch:
 
 cli                 ;  clear interrupts
 lgdt [my_gdt_dtor]  ;  loading gdt
 
 ;  set first bit of cr0, denoting protected mode
+
 mov eax, cr0
 or eax, 0x1
 mov cr0, eax
+
+%ifdef СЫР
  
 jmp CSEG:init       ;  far jump to clear CPU pipeline
 
@@ -27,3 +28,9 @@ mov ss, ax
 ; stack
 mov ebp, 0x90000
 mov esp, ebp
+
+%endif
+
+ret
+
+%include "myGDT.asm" 
