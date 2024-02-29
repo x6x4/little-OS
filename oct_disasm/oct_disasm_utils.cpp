@@ -8,18 +8,8 @@ std::ostream& operator<< (std::ostream &out, const OPD_SZ& op) {
 }
 
 mnem_list arth = {
-	{1, "or"}
-};
-
-opcode_table octal = 
-{
-	{350, {"call", OPD_SZ::WORD}}, 
- 	{353, {"jmp",  OPD_SZ::BYTE}},
-	{372, {"cli"}},
-	{17,  {"",     OPD_SZ::NO_OPD, 1}},
-    {303, {"ret"}},
-    {146, {"[switch 16 to 32]"}},
-    {203,  {"",     OPD_SZ::BYTE, 0, 1, &arth}}
+	{1, "or"}, 
+	{6, "xor"}
 };
 
 mnem_list dtors = {
@@ -32,6 +22,18 @@ mnem_list cntl = {
 
 mnem_list gp = {
     {0, "eax"}
+};
+
+opcode_table octal = 
+{
+	{350, {"call", OPD_SZ::WORD}}, 
+ 	{353, {"jmp",  OPD_SZ::BYTE}},
+	{372, {"cli"}},
+	{17,  {"",     OPD_SZ::NO_OPD, 1}},
+    {303, {"ret"}},
+    {146, {"[switch 16 to 32]"}},
+    {203, {"",     OPD_SZ::BYTE,   0, 1, &arth}},
+	{61,  {"xor",  OPD_SZ::NO_OPD, 0, 1, &gp, &gp}}
 };
 
 opcode_table octal_twobyte = 

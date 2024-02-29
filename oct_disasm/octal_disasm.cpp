@@ -4,6 +4,7 @@
 #include <iomanip>
 
 
+
 int parser () {
 	unsigned opcode;
 	while (std::cin >> opcode) {
@@ -11,10 +12,18 @@ int parser () {
 
 			if (!elm->second.two_byte) {
 				if (elm->second.aux_byte) {
+					if (!elm->second.mnem.empty()) std::cout << elm->second.mnem << ' ';
 					std::cin >> opcode;
-					size_t decs = (opcode%100)/10;
-					std::cout << elm->second.decs_table->find(decs)->second << ' ';
-				} else {
+					if (elm->second.units_table) {
+						size_t units = opcode%10;
+						std::cout << elm->second.units_table->find(units)->second << ", ";
+					}
+					if (elm->second.decs_table) {
+						size_t decs = (opcode%100)/10;
+						std::cout << elm->second.decs_table->find(decs)->second << ' ';
+					}
+				}
+				else if (!elm->second.mnem.empty()) {
 					std::cout << elm->second.mnem << ' ';
 				}
 				print_opd(elm->second.opd_sz);
